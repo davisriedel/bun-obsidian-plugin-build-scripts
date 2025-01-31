@@ -1,0 +1,12 @@
+# npm
+node_modules
+
+# Jetbrains IDEs
+.idea
+
+# VSCode
+.vscode
+
+# MacOS
+.DS_Store
+

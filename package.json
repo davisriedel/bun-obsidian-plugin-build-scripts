@@ -1,0 +1,16 @@
+{
+  "name": "bun-obsidian-plugin-build-scripts",
+  "description": "Scripts to build Obsidian plugins with Bun, SCSS with Grass, and Rust to WASM",
+  "version": "0.0.1",
+  "author": "Davis Riedel",
+  "devDependencies": {
+    "typescript": "latest",
+    "@types/node": "latest",
+    "@types/bun": "latest",
+    "obsidian": "latest",
+    "builtin-modules": "4.0.0",
+    "resolve-tspaths": "^0.8.22",
+    "wasm-pack": "^0.13.0",
+		"@biomejs/biome": "latest"
+  }
+}
