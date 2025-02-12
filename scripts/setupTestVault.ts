@@ -3,7 +3,7 @@ import { $ } from "bun";
 import { getPackageMetadata } from "./getPackageMetadata";
 import { updateManifests } from "./updateManifests";
 
-export async function setupTestVault(pluginName: string, testVaultPath: string = "./test-vault") {
+export async function setupTestVault(distDir: string, pluginName: string, testVaultPath: string = "./test-vault") {
   const obsidianConfigPath = `${testVaultPath}/.obsidian`;
   const pluginPath = `${obsidianConfigPath}/plugins/${pluginName}`;
 
@@ -24,6 +24,9 @@ export async function setupTestVault(pluginName: string, testVaultPath: string =
 
   console.log("Cleaning test vault");
   await $`rm ${pluginPath}/main.js ${pluginPath}/styles.css ${pluginPath}/manifest.json`.quiet();
+
+  console.log("Copying plugin dist files");
+  await $`cp -r ${distDir}/* ${pluginPath}/`;
 
   console.log("Copying updated manifests");
   const { targetVersion, minAppVersion, isBeta } = await getPackageMetadata();
