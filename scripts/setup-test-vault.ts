@@ -1,25 +1,27 @@
 import { $ } from "bun";
 
-import { getPackageMetadata } from "./getPackageMetadata";
-import { updateManifests } from "./updateManifests";
+import { getPackageMetadata } from "./get-package-metadata";
+import { updateManifests } from "./update-manifests";
 
-export async function setupTestVault(distDir: string, pluginName: string, testVaultPath: string = "./test-vault") {
+export async function setupTestVault(
+  distDir: string,
+  pluginName: string,
+  testVaultPath = "./test-vault"
+) {
   const obsidianConfigPath = `${testVaultPath}/.obsidian`;
   const pluginPath = `${obsidianConfigPath}/plugins/${pluginName}`;
 
   console.log("Creating test vault");
   await $`mkdir -p ${pluginPath}`.quiet();
 
-  if (
-    !(await Bun.file(`${obsidianConfigPath}/community-plugins.json`).exists())
-  ) {
+  if (await Bun.file(`${obsidianConfigPath}/community-plugins.json`).exists()) {
+    console.log("Community plugins already configured in test vault");
+  } else {
     console.log("Creating community-plugins.json");
     await Bun.write(
       `${obsidianConfigPath}/community-plugins.json`,
-      `["${pluginName}"]`,
+      `["${pluginName}"]`
     );
-  } else {
-    console.log("Community plugins already configured in test vault");
   }
 
   console.log("Cleaning test vault");

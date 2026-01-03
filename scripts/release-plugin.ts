@@ -1,8 +1,8 @@
 /// <reference types="bun-types" />
 
 import { $ } from "bun";
-import { getPackageMetadata } from "./getPackageMetadata";
-import { updateManifests } from "./updateManifests";
+import { getPackageMetadata } from "./get-package-metadata";
+import { updateManifests } from "./update-manifests";
 
 export async function releasePlugin() {
   console.log("Release script started");
@@ -25,7 +25,7 @@ export async function releasePlugin() {
   if (!changelog.includes(`## ${targetVersion}`)) {
     console.error(`Changelog for v${targetVersion} not found`);
     console.info(
-      "Please provide a changelog entry for the new version in CHANGELOG.md",
+      "Please provide a changelog entry for the new version in CHANGELOG.md"
     );
     process.exit(1);
   }
@@ -45,7 +45,6 @@ export async function releasePlugin() {
 
   console.log("Release script completed");
   console.info(
-    "Run `git push --follow-tags` to push and release the new version",
+    "Run `git push --follow-tags` to push and release the new version"
   );
 }
-
