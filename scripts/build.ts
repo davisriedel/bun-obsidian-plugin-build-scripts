@@ -7,6 +7,8 @@ import { buildWasm } from "./build-wasm";
 import { InlineWasmBunPlugin } from "./inline-wasm-bun-plugin";
 
 export async function build(
+  rootDir: string,
+  projectFile: string,
   srcDir: string,
   entrypoints: {
     main: string;
@@ -19,21 +21,21 @@ export async function build(
   wasm: { build: boolean } | boolean = false
 ) {
   // Create outdir
-  await $`mkdir -p ${outDir}`;
+  await $`mkdir -p ${rootDir}/${outDir}`;
 
   if (typeof wasm === "object" && wasm.build) {
-    await buildWasm();
+    await buildWasm(rootDir);
   }
 
   // Build scss
   console.log("Building styles");
-  await $`grass ${Bun.file(`${srcDir}/${entrypoints.styles}`)} --style compressed > ${Bun.file(`${outDir}/styles.css`)}`;
+  await $`grass ${Bun.file(`${rootDir}/${srcDir}/${entrypoints.styles}`)} --style compressed > ${Bun.file(`${rootDir}/${outDir}/styles.css`)}`;
 
   // Build js
   console.log("Building main");
   await Bun.build({
-    entrypoints: [`${srcDir}/${entrypoints.main}`],
-    outdir: outDir,
+    entrypoints: [`${rootDir}/${srcDir}/${entrypoints.main}`],
+    outdir: `${rootDir}/${outDir}`,
     minify: true,
     target: "browser",
     format,
@@ -61,10 +63,10 @@ export async function build(
   if (generateTypes) {
     // Build typescript declaration files
     console.log("Building types");
-    await $`bun tsc --noEmit false --emitDeclarationOnly --declaration --outDir ${outDir}/types`;
+    await $`bun tsc --project ${rootDir}/${projectFile} --noEmit false --emitDeclarationOnly --declaration --outDir ${rootDir}/${outDir}/types`;
     resolveTsPaths({
-      src: srcDir,
-      out: `${outDir}/types`,
+      src: `${rootDir}/${srcDir}`,
+      out: `${rootDir}/${outDir}/types`,
     });
   }
 }
