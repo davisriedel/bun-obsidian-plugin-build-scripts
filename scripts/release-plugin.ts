@@ -22,7 +22,8 @@ export async function releasePlugin() {
 
   console.log("Reading changelog");
   const changelog = await Bun.file("CHANGELOG.md").text();
-  if (!changelog.includes(`## ${targetVersion}`)) {
+  const checkChangelogRegex = new RegExp(`^## ${targetVersion}$`, "m");
+  if (!checkChangelogRegex.test(changelog)) {
     console.error(`Changelog for v${targetVersion} not found`);
     console.info(
       "Please provide a changelog entry for the new version in CHANGELOG.md"
