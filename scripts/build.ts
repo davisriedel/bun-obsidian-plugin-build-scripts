@@ -6,20 +6,32 @@ import { resolveTsPaths } from "resolve-tspaths";
 import { buildWasm } from "./build-wasm";
 import { InlineWasmBunPlugin } from "./inline-wasm-bun-plugin";
 
-export async function build(
-  rootDir: string,
-  projectFile: string,
-  srcDir: string,
-  entrypoints: {
-    main: string;
-    styles: string;
-  },
-  outDir: string,
-  format: "cjs" | "esm" = "cjs",
+export interface BuildOptions {
+  entrypoints?: {
+    main?: string;
+    styles?: string;
+  };
+  format?: "cjs" | "esm";
+  generateTypes?: boolean;
+  outDir?: string;
+  projectFile?: string;
+  rootDir?: string;
+  srcDir?: string;
+  stripDebug?: boolean;
+  wasm?: { build: boolean } | boolean;
+}
+
+export async function build({
+  rootDir = ".",
+  projectFile = "tsconfig.json",
+  srcDir = "src",
+  entrypoints: { main = "main.ts", styles = "styles/index.scss" } = {},
+  outDir = "dist",
+  format = "cjs",
   stripDebug = false,
   generateTypes = false,
-  wasm: { build: boolean } | boolean = false
-) {
+  wasm = false,
+}: BuildOptions = {}) {
   // Create outdir
   await $`mkdir -p ${rootDir}/${outDir}`;
 
@@ -29,12 +41,12 @@ export async function build(
 
   // Build scss
   console.log("Building styles");
-  await $`grass ${Bun.file(`${rootDir}/${srcDir}/${entrypoints.styles}`)} --style compressed > ${Bun.file(`${rootDir}/${outDir}/styles.css`)}`;
+  await $`grass ${Bun.file(`${rootDir}/${srcDir}/${styles}`)} --style compressed > ${Bun.file(`${rootDir}/${outDir}/styles.css`)}`;
 
   // Build js
   console.log("Building main");
   await Bun.build({
-    entrypoints: [`${rootDir}/${srcDir}/${entrypoints.main}`],
+    entrypoints: [`${rootDir}/${srcDir}/${main}`],
     outdir: `${rootDir}/${outDir}`,
     minify: true,
     target: "browser",
