@@ -1,6 +1,6 @@
 /// <reference types="bun-types" />
 
-import builtins from "builtin-modules";
+import { builtinModules as builtins } from "node:module";
 import { $ } from "bun";
 import { resolveTsPaths } from "resolve-tspaths";
 import { buildWasm } from "./build-wasm";
