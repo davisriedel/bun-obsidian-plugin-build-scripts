@@ -5,6 +5,6 @@ lint:
   bun x ultracite fix
 
 typecheck:
-  bun tsgo --noEmit
+  bun tsc --noEmit
 
 check: typecheck lint
