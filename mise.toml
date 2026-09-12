@@ -1,0 +1,20 @@
+[tools]
+rust = "1.98.1"
+"cargo:grass" = "0.13.4"
+"github:rustwasm/wasm-pack" = "0.15.0"
+
+[tasks.default]
+description = "List available tasks"
+run = "mise tasks"
+
+[tasks.lint]
+description = "Lint and format source files"
+run = "bun x ultracite fix"
+
+[tasks.typecheck]
+description = "Type-check the project"
+run = "bun tsc --noEmit"
+
+[tasks.check]
+description = "Run all checks"
+depends = ["typecheck", "lint"]

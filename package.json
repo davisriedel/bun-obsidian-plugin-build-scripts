@@ -11,14 +11,12 @@
     "obsidian": "^1.13.1",
     "resolve-tspaths": "^0.8.23",
     "typescript": "^7.0.2",
-    "ultracite": "7.8.2",
-    "wasm-pack": "^0.15.0"
+    "ultracite": "7.8.2"
   },
   "scripts": {
     "prepare": "lefthook install"
   },
   "trustedDependencies": [
-    "lefthook",
-    "wasm-pack"
+    "lefthook"
   ]
 }

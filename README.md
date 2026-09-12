@@ -24,8 +24,7 @@ Designed to be consumed as a **git submodule** so multiple plugin repos can shar
 ## Requirements
 
 - [Bun](https://bun.sh) v1.0+
-- [Grass](https://github.com/connorskees/grass) (for SCSS compilation) — install with `cargo install grass`
-- [wasm-pack](https://rustwasm.github.io/wasm-pack/) (only for WASM builds)
+- [mise](https://mise.jdx.dev/) (installs the required [Grass](https://github.com/connorskees/grass) Sass compiler and [wasm-pack](https://rustwasm.github.io/wasm-pack/); wasm-pack is only used for WASM builds)
 
 ---
 
@@ -42,7 +41,9 @@ git submodule add git@github.com:davisriedel/bun-obsidian-plugin-build-scripts.g
 Run inside the submodule directory:
 
 ```sh
-cd scripts/common && bun install
+cd scripts/common
+mise install
+bun install
 ```
 
 ### Call scripts from your plugin
@@ -68,11 +69,12 @@ await releasePlugin();
 ## Development
 
 ```sh
-bun x ultracite fix   # Format and auto-fix lint issues
-bun x ultracite check # Check for issues without fixing
+mise run lint      # Format and auto-fix lint issues
+mise run typecheck # Type-check the project
+mise run check     # Run all checks
 ```
 
-A Lefthook pre-commit hook runs `ultracite fix` automatically on staged files.
+A Lefthook pre-commit hook runs all checks automatically on staged files.
 
 ---
 
