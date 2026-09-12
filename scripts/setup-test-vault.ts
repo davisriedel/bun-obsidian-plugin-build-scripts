@@ -25,7 +25,7 @@ export async function setupTestVault(
   }
 
   console.log("Cleaning test vault");
-  await $`rm ${pluginPath}/main.js ${pluginPath}/styles.css ${pluginPath}/manifest.json`.quiet();
+  await $`rm -f ${pluginPath}/main.js ${pluginPath}/styles.css ${pluginPath}/manifest.json`.quiet();
 
   console.log("Copying plugin dist files");
   await $`cp -r ${distDir}/* ${pluginPath}/`;
