@@ -28,5 +28,5 @@ export async function updateManifests(
   manifestBeta.minAppVersion = minAppVersion;
   await Bun.write(betaOutPath, JSON.stringify(manifestBeta, null, 2));
 
-  return { targetVersion, minAppVersion };
+  return { minAppVersion, targetVersion };
 }

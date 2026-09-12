@@ -6,5 +6,5 @@ export async function getPackageMetadata() {
   const targetVersion = pkg.version;
   const minAppVersion = pkg.obsidianMinAppVersion;
   const isBeta = targetVersion.includes("-");
-  return { targetVersion, minAppVersion, isBeta };
+  return { isBeta, minAppVersion, targetVersion };
 }

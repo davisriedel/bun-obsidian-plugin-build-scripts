@@ -46,13 +46,8 @@ export async function build({
   // Build js
   console.log("Building main");
   await Bun.build({
-    entrypoints: [`${rootDir}/${srcDir}/${main}`],
-    outdir: `${rootDir}/${outDir}`,
-    minify: true,
-    target: "browser",
-    format,
-    plugins: wasm ? [InlineWasmBunPlugin] : [],
     drop: stripDebug ? ["console"] : [],
+    entrypoints: [`${rootDir}/${srcDir}/${main}`],
     external: [
       "obsidian",
       "electron",
@@ -70,6 +65,11 @@ export async function build({
       "@lezer/lr",
       ...builtins,
     ],
+    format,
+    minify: true,
+    outdir: `${rootDir}/${outDir}`,
+    plugins: wasm ? [InlineWasmBunPlugin] : [],
+    target: "browser",
   });
 
   if (generateTypes) {
@@ -77,8 +77,8 @@ export async function build({
     console.log("Building types");
     await $`bun tsc --project ${rootDir}/${projectFile} --noEmit false --emitDeclarationOnly --declaration --outDir ${rootDir}/${outDir}/types`;
     resolveTsPaths({
-      src: `${rootDir}/${srcDir}`,
       out: `${rootDir}/${outDir}/types`,
+      src: `${rootDir}/${srcDir}`,
     });
   }
 }

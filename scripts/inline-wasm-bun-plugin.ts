@@ -12,7 +12,7 @@ export const InlineWasmBunPlugin: BunPlugin = {
     builder.onResolve({ filter: FILTER }, (args) => {
       // Resolve the .wasm file path relative to the directory of the importing file
       const resolvedPath = path.resolve(path.dirname(args.importer), args.path);
-      return { path: resolvedPath, namespace: "wasm" };
+      return { namespace: "wasm", path: resolvedPath };
     });
 
     // Handle the .wasm file loading
