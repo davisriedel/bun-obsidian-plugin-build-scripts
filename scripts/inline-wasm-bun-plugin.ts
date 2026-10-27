@@ -3,7 +3,7 @@
 import path from "node:path";
 import type { BunPlugin } from "bun";
 
-const FILTER = /\.wasm$/;
+const FILTER = /\.wasm$/u;
 
 export const InlineWasmBunPlugin: BunPlugin = {
   name: "inline-wasm",

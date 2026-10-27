@@ -16,9 +16,8 @@ export async function generateCiArtefacts(outDir: string) {
   console.log("Extracting release notes from change log");
   const changelog = await Bun.file("CHANGELOG.md").text();
   const pattern = `^## ${targetVersion}\\n+((?:([^#]{2})|\\n)+)`;
-  const regex = new RegExp(pattern, "gm");
+  const regex = new RegExp(pattern, "gmu");
   const matches = regex.exec(changelog);
-  // biome-ignore lint/suspicious/noUnnecessaryConditions: wrongly flagged
   const release_notes = matches?.at(1);
   if (!release_notes) {
     console.warn("Release notes not found in changelog");

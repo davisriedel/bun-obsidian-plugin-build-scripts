@@ -15,6 +15,6 @@ export async function buildWasm(rootDir: string) {
   ).json();
   const mainFilePath = `${rootDir}/pkg/${mainFileName}`;
   const mainFileConent = await Bun.file(mainFilePath).text();
-  const updatedContent = mainFileConent.replace(/import\.meta\.url/g, "");
+  const updatedContent = mainFileConent.replace(/import\.meta\.url/gu, "");
   await Bun.write(mainFilePath, updatedContent);
 }
